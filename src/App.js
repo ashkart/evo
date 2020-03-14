@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.scss';
-import {Cell} from "./grid/cell";
+import {Grid} from "./grid/grid";
 
 function App() {
   return (
     <div className="app">
-      <Cell size={20}/>
+      <Grid cellSize={20} />
     </div>
   );
 }
