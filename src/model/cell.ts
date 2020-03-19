@@ -1,27 +1,49 @@
 import { Genome } from "./genome";
 import { observable, action } from "mobx";
+import { Point } from "./point";
+import { World } from "./world";
 
 export class Cell {
-    id: number;
+  id: number;
 
-    @observable x: number;
-    @observable y: number;
-    @observable energy: number;
-    @observable genome: Genome;
+  isAlive: boolean = true;
 
-    constructor(id: number, x: number, y: number, genome: Genome) {
-        this.id = id;
-        this.x = x;
-        this.y = y;
-        this.genome = genome;
-        this.energy = genome.startEnergy;
-    }
+  @observable position: Point;
+  @observable energy: number;
+  @observable genome: Genome;
 
-    @action act(): void {
-        for (const instinctName in this.genome.instincts) {
-            if (this.genome.instincts[instinctName](this) === true) {
-                break;
-            }
+  constructor(id: number, position: Point, genome: Genome) {
+    this.id = id;
+    this.position = position;
+    this.genome = genome;
+    this.energy = genome.startEnergy;
+  }
+
+  @action act(world: World): void {
+    for (const instinctName in this.genome.instincts) {
+      const iResult = this.genome.instincts[instinctName](this);
+      if (iResult === true) {
+        break;
+      }
+
+      if (iResult instanceof Cell) {
+        if (instinctName === 'split') {
+          world.moveCell(this, this.position);
+          world.cells.push(iResult);
         }
+      }
     }
+  }
+
+  @action spendEnergy(value: number) {
+    this.energy -= value;
+
+    if (this.energy <= 0) {
+      this.die();
+    }
+  }
+
+  @action die() {
+    this.isAlive = false;
+  }
 }

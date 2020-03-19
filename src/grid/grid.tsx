@@ -26,7 +26,7 @@ export const Grid: FC<IProps> = observer(({ cellsData = [], cellSize = 20, xSize
             let x = 0;
     
             while (x < xSize) {
-                const cellData = cellsData.find(c => c.x === x && c.y === y);
+                const cellData = cellsData.find(c => c.position.x === x && c.position.y === y);
 
                 cells[y].push(
                     <Cell size={cellSize} key={`${x}_${y}`} x={x} y={y}>

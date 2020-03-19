@@ -7,11 +7,14 @@ import { World } from './model/world';
 import { Genome } from './model/genome';
 import { Cell } from './model/cell';
 import { InstinctRegistry } from './model/genome/instincts';
+import { Point } from './model/point';
 
-const defaultGenome = new Genome();
-const cell = new Cell(1, 4, 5, defaultGenome);
+const defaultGenome = new Genome(10000, 300, 500);
+const cell = new Cell(World.lastCellId++, new Point(4, 5), defaultGenome);
+cell.energy = 500;
 
-defaultGenome.instincts.push(InstinctRegistry.leftOne.bind(cell));
+defaultGenome.instincts.push(InstinctRegistry.leftOne);
+defaultGenome.instincts.push(InstinctRegistry.split);
 
 const world = new World();
 world.cells = [
