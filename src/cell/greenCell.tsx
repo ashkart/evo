@@ -1,13 +1,14 @@
 import React, { memo, FC, useEffect, useRef } from "react";
+import { observer } from "mobx-react";
+import { Cell } from "./cell";
 
 import "./cell.scss";
-import { Cell } from "./cell";
 
 interface IProps {
 
 }
 
-export const GreenCell: FC<IProps> = memo(() => {
+export const GreenCell: FC<IProps> = observer(() => {
     const val = useRef(0);
 
     useEffect(() => {

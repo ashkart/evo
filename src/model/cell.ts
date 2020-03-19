@@ -1,12 +1,16 @@
 import { Genome } from "./genome";
+import { observable } from "mobx";
 
 export class Cell {
-    x: number;
-    y: number;
-    energy: number;
-    genome: Genome;
+    id: number;
 
-    constructor(x: number, y: number, genome: Genome) {
+    @observable x: number;
+    @observable y: number;
+    @observable energy: number;
+    @observable genome: Genome;
+
+    constructor(id: number, x: number, y: number, genome: Genome) {
+        this.id = id;
         this.x = x;
         this.y = y;
         this.genome = genome;
@@ -15,7 +19,7 @@ export class Cell {
 
     public act(): void {
         for (const instinctName in this.genome.instincts) {
-            if (this.genome.instincts[instinctName]() === true) {
+            if (this.genome.instincts[instinctName](this) === true) {
                 break;
             }
         }

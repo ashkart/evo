@@ -1,7 +1,10 @@
-export type Instincts = Record<string, () => boolean>;
+import { Cell } from "../cell";
+
+export type Instincts = Record<string, (cell: Cell) => boolean>;
 
 export const allInstincts: Instincts = {
-    rightOne: () : boolean => {
+    rightOne: (cell: Cell) : boolean => {
+        cell.x++;
         return true;
     },
 

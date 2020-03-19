@@ -2,9 +2,10 @@ import React, { FC, ReactNode, useMemo } from "react";
 import { Cell } from "./cell";
 
 import {Cell as CellData} from "../model/cell";
+import { GreenCell } from "../cell/greenCell";
+import { observer } from "mobx-react";
 
 import "./grid.scss";
-import { GreenCell } from "../cell/greenCell";
 
 interface IProps {
     cellsData: CellData[];
@@ -13,7 +14,7 @@ interface IProps {
     ySize: number;
 }
 
-export const Grid: FC<IProps> = ({ cellsData = [], cellSize = 20, xSize = 10, ySize = 10 }) => {
+export const Grid: FC<IProps> = observer(({ cellsData = [], cellSize = 20, xSize = 10, ySize = 10 }) => {
     // const renderCellsMemoized = useMemo(
     //     () => renderCells(cellsData, cellSize, xSize, ySize), 
     //     [cellsData, cellSize, xSize, ySize]
@@ -56,7 +57,7 @@ export const Grid: FC<IProps> = ({ cellsData = [], cellSize = 20, xSize = 10, yS
             {renderCells()}
         </div>
     );
-};
+});
 
 /*
 const renderCells = (cellsData: CellData[], cellSize: number, xSize: number, ySize: number) => {

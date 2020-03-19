@@ -1,6 +1,7 @@
-import React, { FC, memo, ReactChildren, ReactNode } from "react";
+import React, { FC, ReactNode } from "react";
 
 import "./cell.scss";
+import { observer } from "mobx-react";
 
 interface IProps {
     size: number;
@@ -9,9 +10,8 @@ interface IProps {
     y: number;
 }
 
-export const Cell: FC<IProps> = memo(({ size, children }) => {
+export const Cell: FC<IProps> = observer((props) => {
+    const {size, children} = props;
+
     return <div className="cell" style={{ width: size, height: size }}>{children}</div>;
-}, 
-(prevProps: IProps, nextProps: IProps) => {
-    return prevProps.children === nextProps.children;
 });
