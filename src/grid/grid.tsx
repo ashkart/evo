@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useMemo } from "react";
+import React, { FC, ReactNode } from "react";
 import { Cell } from "./cell";
 
 import {Cell as CellData} from "../model/cell";
@@ -15,11 +15,6 @@ interface IProps {
 }
 
 export const Grid: FC<IProps> = observer(({ cellsData = [], cellSize = 20, xSize = 10, ySize = 10 }) => {
-    // const renderCellsMemoized = useMemo(
-    //     () => renderCells(cellsData, cellSize, xSize, ySize), 
-    //     [cellsData, cellSize, xSize, ySize]
-    // );
-
     const renderCells = () => {
         const cells: ReactNode[][] = [];
     
@@ -37,7 +32,7 @@ export const Grid: FC<IProps> = observer(({ cellsData = [], cellSize = 20, xSize
                     <Cell size={cellSize} key={`${x}_${y}`} x={x} y={y}>
                         {
                             cellData && 
-                            <GreenCell/>
+                            <GreenCell />
                         }
                     </Cell>
                 );
@@ -50,43 +45,9 @@ export const Grid: FC<IProps> = observer(({ cellsData = [], cellSize = 20, xSize
         return cells;
     };
 
-    console.log('grid rendered');
-
     return (
         <div className="grid" style={{width: cellSize * xSize}}>
             {renderCells()}
         </div>
     );
 });
-
-/*
-const renderCells = (cellsData: CellData[], cellSize: number, xSize: number, ySize: number) => {
-    const cells: ReactNode[][] = [];
-
-    let x = 0;
-
-    while (x < xSize) {
-        cells[x] = [];
-
-        let y = 0;
-
-        while (y < ySize) {
-            const cellData = cellsData.find(c => c.x === x && c.y === y);
-
-            cells[x].push(
-                <Cell size={cellSize} key={`${x}_${y}`}>
-                    {
-                        cellData && 
-                        <GreenCell/>
-                    }
-                </Cell>
-            );
-            y++;
-        }
-
-        x++;
-    }
-
-    return cells;
-};
-*/

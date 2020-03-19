@@ -1,4 +1,4 @@
-import React, { memo, FC, useEffect, useRef } from "react";
+import React, { FC, useEffect, useRef } from "react";
 import { observer } from "mobx-react";
 import { Cell } from "./cell";
 

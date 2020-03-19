@@ -1,5 +1,4 @@
-import { Cell } from "./cell";
-import { Instincts } from "./genome/instincts";
+import { observable } from "mobx";
 
 export class Genome {
     // abilities
@@ -7,15 +6,15 @@ export class Genome {
     startEnergy: number;
     maxEnergy: number;
 
-    instincts: Instincts;
+    @observable instincts: Function[];
 
-    reactions: Function[];
+    @observable reactions: Function[];
 
     constructor(
         maxAge = 100,
         startEnergy = 100,
         maxEnergy = 200,
-        instincts = {},
+        instincts = [],
         reactions = []
     ) {
         this.maxAge = maxAge;

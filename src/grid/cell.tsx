@@ -12,6 +12,8 @@ interface IProps {
 
 export const Cell: FC<IProps> = observer((props) => {
     const {size, children} = props;
+    
+    console.log('grid cell rendered');
 
     return <div className="cell" style={{ width: size, height: size }}>{children}</div>;
 });

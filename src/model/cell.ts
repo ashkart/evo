@@ -1,5 +1,5 @@
 import { Genome } from "./genome";
-import { observable } from "mobx";
+import { observable, action } from "mobx";
 
 export class Cell {
     id: number;
@@ -17,7 +17,7 @@ export class Cell {
         this.energy = genome.startEnergy;
     }
 
-    public act(): void {
+    @action act(): void {
         for (const instinctName in this.genome.instincts) {
             if (this.genome.instincts[instinctName](this) === true) {
                 break;

@@ -10,15 +10,15 @@ export class World {
   ySize: number = 10;
 
   @action tick = () => {
-    this.cells.forEach(cell => {
+    for (const cell of this.cells) {
       cell.energy--;
 
       cell.act();
 
       // замкнутый мир
-      cell.x = cell.x > 0 ? Math.max(this.xSize - cell.x, 0) : this.xSize;
-      cell.y = cell.y > 0 ? Math.max(this.ySize - cell.y, 0) : this.ySize;
-    });
+      cell.x = cell.x >= this.xSize ? 0 : (cell.x < 0 ? this.xSize - 1 : cell.x);
+      cell.y = cell.y >= this.ySize ? 0 : (cell.y < 0 ? this.ySize - 1 : cell.y);
+    }
   };
 
   start() {

@@ -3,8 +3,6 @@ import { Grid } from "./grid/grid";
 import { observer } from "mobx-react";
 
 import { World } from "./model/world";
-import { Cell } from "./model/cell";
-import { Genome } from "./model/genome";
 
 import "./App.scss";
 
@@ -17,7 +15,7 @@ const App = observer((props: IProps) => {
 
   useEffect(() => {
     world.start();
-  }, []);
+  }, [world]);
 
   return (
     <div className="app">
