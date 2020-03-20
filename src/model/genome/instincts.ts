@@ -67,15 +67,19 @@ export class InstinctRegistry {
   }
 
   static split(cell: Cell, world: World): boolean {
-    if (cell.energy <= cell.genome.startEnergy + 100) {
+    const halfEnergy = cell.energy / 2;
+
+    if (cell.energy <= cell.genome.startEnergy * 2) {
       return false;
     }
 
-    cell.spendEnergy(cell.genome.startEnergy);
+    cell.spendEnergy(halfEnergy);
 
     const genome = cell.genome;
 
     const child = new Cell(World.lastCellId++, cell.position, genome);
+    child.energy = halfEnergy;
+
     world.cells.push(child);
 
     return false;

@@ -13,7 +13,7 @@ import './index.css';
 
 const defaultGenome = new Genome(10000, 300, 1500);
 const cell = new Cell(World.lastCellId++, new Point(4, 5), defaultGenome);
-cell.energy = 900;
+cell.energy = 50000;
 
 defaultGenome.instincts.push(InstinctRegistry.split);
 defaultGenome.instincts.push(InstinctRegistry.leftOne);
