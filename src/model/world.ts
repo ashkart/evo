@@ -1,7 +1,6 @@
 import { Cell } from "./cell";
 import { observable, action } from "mobx";
 import { Point } from "./point";
-import { getRandomFreePointAround } from "./genome/instincts";
 
 export class World {
   static lastCellId: number = 0;

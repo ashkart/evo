@@ -1,6 +1,6 @@
 import { Cell } from "../cell";
 import { World } from "../world";
-import { getRandomFreePointAround } from "./instincts";
+import { getRandomFreePointAround } from "../helpers";
 
 export class ReactionsRegistry {
   static obstacleMoveRandom(cell: Cell, world: World) : boolean {
