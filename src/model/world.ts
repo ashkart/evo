@@ -6,7 +6,7 @@ import { getRandomFreePointAround, InstinctRegistry } from "./genome/instincts";
 export class World {
   static lastCellId: number = 0;
 
-  updateInterval: NodeJS.Timeout | null = null;
+  isStarted: boolean = false;
 
   loopCache: Record<string, Point> = {};
 
@@ -61,14 +61,19 @@ export class World {
   }
 
   start() {
-    this.updateInterval = setInterval(() => {
-      this.tick();
-    }, 1000);
+    this.isStarted = true;
+
+    const fn = () => {
+      if (this.isStarted) {
+        this.tick();
+        setTimeout(fn, 1000);
+      }
+    };
+
+    fn();
   }
 
   stop() {
-    if (this.updateInterval !== null) {
-      clearInterval(this.updateInterval);
-    }
+    this.isStarted = false;
   }
 }
