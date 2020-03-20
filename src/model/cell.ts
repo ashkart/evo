@@ -2,6 +2,7 @@ import { Genome } from "./genome";
 import { observable, action } from "mobx";
 import { Point } from "./point";
 import { World } from "./world";
+import { InstinctRegistry } from "./genome/instincts";
 
 export class Cell {
   id: number;
@@ -16,21 +17,16 @@ export class Cell {
     this.id = id;
     this.position = position;
     this.genome = genome;
+
     this.energy = genome.startEnergy;
   }
 
   @action act(world: World): void {
     for (const instinctName in this.genome.instincts) {
-      const iResult = this.genome.instincts[instinctName](this);
+      const iResult = this.genome.instincts[instinctName](this, world);
+
       if (iResult === true) {
         break;
-      }
-
-      if (iResult instanceof Cell) {
-        if (instinctName === 'split') {
-          world.moveCell(this, this.position);
-          world.cells.push(iResult);
-        }
       }
     }
   }

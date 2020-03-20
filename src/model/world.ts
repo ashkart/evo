@@ -14,18 +14,16 @@ export class World {
   ySize: number = 10;
 
   @action tick = () => {
-    for (let i = 0; i < this.cells.length; i++) {
-      const cell = this.cells[i];
-
+    this.cells.forEach((cell, i) => {
       if (!cell.isAlive) {
         this.removeCell(i);
-        continue;
+        return;
       }
 
       cell.act(this);
 
       cell.position = this.worldLoopPosition(cell.position);
-    }
+    });
   }
 
   @action removeCell(index: number) {
@@ -33,7 +31,7 @@ export class World {
   }
 
   @action moveCell(cell: Cell, newPos: Point) : boolean {
-    if (!this.isEmptyPoint(newPos)) {
+    if (this.isEmptyPoint(newPos)) {
       cell.position = newPos;
       return true;
     }
