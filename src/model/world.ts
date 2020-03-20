@@ -1,7 +1,7 @@
 import { Cell } from "./cell";
 import { observable, action } from "mobx";
 import { Point } from "./point";
-import { getRandomFreePointAround, InstinctRegistry } from "./genome/instincts";
+import { getRandomFreePointAround } from "./genome/instincts";
 
 export class World {
   static lastCellId: number = 0;
@@ -26,11 +26,11 @@ export class World {
     });
   }
 
-  @action removeCell(index: number) {
+  removeCell(index: number) {
     this.cells.splice(index, 1);
   }
 
-  @action moveCell(cell: Cell, newPos: Point) : boolean {
+  moveCell(cell: Cell, newPos: Point) : boolean {
     newPos = this.worldLoopPosition(newPos);
 
     if (this.isEmptyPoint(newPos) || cell.position.equals(newPos)) {
@@ -38,8 +38,7 @@ export class World {
       return true;
     }
 
-    cell.position = getRandomFreePointAround(cell.position, this);
-    return true;
+    return cell.genome.reactions.onObstacle(cell, this);
   }
 
   // замкнутый мир

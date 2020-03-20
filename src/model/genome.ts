@@ -1,4 +1,5 @@
 import { observable } from "mobx";
+import { DefaultReactions } from "./genome/defaultReactions";
 
 export class Genome {
     // abilities
@@ -8,19 +9,19 @@ export class Genome {
 
     @observable instincts: Function[];
 
-    @observable reactions: Function[];
+    @observable reactions: DefaultReactions;
 
     constructor(
         maxAge = 100,
         startEnergy = 100,
         maxEnergy = 200,
         instincts = [],
-        reactions = []
+        reactions = new DefaultReactions()
     ) {
         this.maxAge = maxAge;
         this.startEnergy = startEnergy;
         this.maxEnergy = maxEnergy;
         this.instincts = instincts;
-        this.reactions =  reactions;
+        this.reactions = reactions;
     }
 }

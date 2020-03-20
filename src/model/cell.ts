@@ -2,7 +2,6 @@ import { Genome } from "./genome";
 import { observable, action } from "mobx";
 import { Point } from "./point";
 import { World } from "./world";
-import { InstinctRegistry } from "./genome/instincts";
 
 export class Cell {
   id: number;
@@ -21,7 +20,7 @@ export class Cell {
     this.energy = genome.startEnergy;
   }
 
-  @action act(world: World): void {
+  act(world: World): void {
     for (const instinctName in this.genome.instincts) {
       const iResult = this.genome.instincts[instinctName](this, world);
 
@@ -31,7 +30,7 @@ export class Cell {
     }
   }
 
-  @action spendEnergy(value: number) {
+  spendEnergy(value: number) {
     this.energy -= value;
 
     if (this.energy <= 0) {
@@ -39,7 +38,7 @@ export class Cell {
     }
   }
 
-  @action die() {
+  die() {
     this.isAlive = false;
   }
 }
