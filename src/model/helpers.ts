@@ -1,5 +1,6 @@
 import { Point } from "./point";
 import { World } from "./world";
+import { InstinctRegistry, Instinct } from "./genome/instincts";
 
 const directionsMovingMap = [
   'leftOne',
@@ -11,6 +12,12 @@ const directionsMovingMap = [
   'rightDownOne',
   'rightUpOne',
 ];
+
+export const getRandomMoveInstinct = () : Instinct => {
+  const index = getRandomInt(directionsMovingMap.length - 1);
+  
+  return InstinctRegistry[directionsMovingMap[index]];
+};
 
 const getRandomInt = (max: number, min: number = 0) : number => {
   min = Math.ceil(min);

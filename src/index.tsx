@@ -10,13 +10,14 @@ import { InstinctRegistry } from './model/genome/instincts';
 import { Point } from './model/point';
 
 import './index.css';
+import { getRandomMoveInstinct } from './model/helpers';
 
 const defaultGenome = new Genome(10000, 300, 5000);
 const cell = new Cell(World.lastCellId++, new Point(4, 5), defaultGenome);
-cell.energy = 3200;
+cell.energy = 1500;
 
 defaultGenome.instincts.push(InstinctRegistry.split);
-defaultGenome.instincts.push(InstinctRegistry.leftOne);
+defaultGenome.instincts.push(getRandomMoveInstinct());
 
 const world = new World();
 world.cells = [
