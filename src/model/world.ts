@@ -29,6 +29,8 @@ export class World {
   }
 
   @action moveCell(cell: Cell, newPos: Point) : boolean {
+    newPos = this.worldLoopPosition(newPos);
+
     if (this.isEmptyPoint(newPos)) {
       cell.position = newPos;
       return true;
@@ -55,7 +57,7 @@ export class World {
     let point = this.newPointByDirectionCode(position, getRandomInt(InstinctRegistry.directionsMovingMap.length - 1));
 
     while (!this.isEmptyPoint(point)) {
-      point = this.newPointByDirectionCode(position, getRandomInt(InstinctRegistry.directionsMovingMap.length - 1))
+      point = this.newPointByDirectionCode(position, getRandomInt(InstinctRegistry.directionsMovingMap.length - 1));
     }
 
     return point;
