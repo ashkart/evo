@@ -21,8 +21,6 @@ export class World {
       }
 
       cell.act(this);
-
-      cell.position = this.worldLoopPosition(cell.position);
     });
   }
 

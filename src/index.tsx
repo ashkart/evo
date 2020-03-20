@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { World } from './model/world';
@@ -8,6 +8,8 @@ import { Genome } from './model/genome';
 import { Cell } from './model/cell';
 import { InstinctRegistry } from './model/genome/instincts';
 import { Point } from './model/point';
+
+import './index.css';
 
 const defaultGenome = new Genome(10000, 300, 1500);
 const cell = new Cell(World.lastCellId++, new Point(4, 5), defaultGenome);

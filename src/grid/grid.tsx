@@ -17,37 +17,32 @@ interface IProps {
 export const Grid: FC<IProps> = observer(
   ({ cellsData = [], cellSize = 20, xSize = 10, ySize = 10 }) => {
     const renderCells = () => {
-      const cells: ReactNode[][] = [];
+      const rows: ReactNode[][] = [];
 
       let y = 0;
 
-      while (y < ySize) {
-        cells[y] = [];
+      for (let y = 0; y < ySize; y++) {
+        rows[y] = [];
 
-        let x = 0;
-
-        while (x < xSize) {
+        for (let x = 0; x < ySize; x++) {
           const cellData = cellsData.find(
             c => c.position.x === x && c.position.y === y,
           );
 
-          cells[y].push(
+          rows[y].push(
             <Cell size={cellSize} key={`${x}_${y}`} x={x} y={y}>
               {cellData && <GreenCell>{cellData.id}</GreenCell>}
             </Cell>,
           );
-          x++;
         }
-
-        y++;
       }
 
-      return cells;
+      return rows;
     };
 
     return (
       <div className="grid" style={{ width: cellSize * xSize }}>
-        {renderCells()}
+        {renderCells().map((rowElements: ReactNode[]) => <div className="flex-row">{rowElements}</div>)}
       </div>
     );
   },
