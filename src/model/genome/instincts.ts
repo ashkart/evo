@@ -1,7 +1,6 @@
 import { Cell } from "../cell";
 import { World } from "../world";
 import { Point } from "../point";
-import { getRandomFreePointAround } from "../helpers";
 
 export class InstinctRegistry {
   static rightOne(cell: Cell, world: World): boolean {
