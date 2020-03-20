@@ -1,7 +1,7 @@
 import { Cell } from "./cell";
 import { observable, action } from "mobx";
 import { Point } from "./point";
-import { InstinctRegistry } from "./genome/instincts";
+import { getRandomFreePointAround } from "./genome/instincts";
 
 export class World {
   static lastCellId: number = 0;
@@ -36,7 +36,11 @@ export class World {
       return true;
     }
 
-    const newPosition = this.getRandomFreePointAround(cell.position);
+    let newPosition = getRandomFreePointAround(cell.position, this);
+
+    while (!this.isEmptyPoint(newPosition)) {
+      newPosition = getRandomFreePointAround(cell.position, this);
+    }
 
     return this.moveCell(cell, newPosition);
   }
@@ -53,56 +57,6 @@ export class World {
     return this.cells.find(c => c.position.x === point.x && c.position.y === point.y) === undefined;
   }
 
-  getRandomFreePointAround (position: Point) : Point {
-    let point = this.newPointByDirectionCode(position, getRandomInt(InstinctRegistry.directionsMovingMap.length - 1));
-
-    while (!this.isEmptyPoint(point)) {
-      point = this.newPointByDirectionCode(position, getRandomInt(InstinctRegistry.directionsMovingMap.length - 1));
-    }
-
-    return point;
-  }
-
-  newPointByDirectionCode(position: Point, directionCode: number) : Point {
-    let newX: number = position.x;
-    let newY: number = position.y;
-  
-    switch (directionCode) {
-      case 0:
-        newX--;
-        break;
-  
-      case 1:
-        newX++;
-        break;
-  
-      case 2: 
-        newY--;
-        break;
-  
-      case 3: 
-        newY++;
-        break;
-  
-      case 4:
-        newX--;
-        newY++;
-        break;
-  
-      case 5:
-        newX++;
-        newY++;
-        break;
-      
-      case 6:
-        newX--;
-        newY--;
-        break;
-    }
-  
-    return this.worldLoopPosition(new Point(newX, newY));
-  }
-
   start() {
     this.updateInterval = setInterval(() => {
       this.tick();
@@ -114,11 +68,4 @@ export class World {
       clearInterval(this.updateInterval);
     }
   }
-}
-
-const getRandomInt = (max: number, min: number = 0) : number => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-
-  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
