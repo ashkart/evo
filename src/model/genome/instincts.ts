@@ -60,13 +60,6 @@ export class InstinctRegistry {
     return true;
   }
 
-  static randomOne(cell: Cell, world: World) : boolean {
-    cell.spendEnergy(1);
-    world.moveCell(cell, getRandomFreePointAround(cell.position, world));
-
-    return true;
-  }
-
   static split(cell: Cell, world: World): boolean {
     const halfEnergy = Math.floor(cell.energy / 2);
 
