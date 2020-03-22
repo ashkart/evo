@@ -64,10 +64,10 @@ export default App;
 
 const newWorld = () : World => {
   const world = new World();
-  world.xSize = 80;
-  world.ySize = 40;
+  world.xSize = 30;
+  world.ySize = 30;
 
-  const defaultGenome = new Genome(10000, 80);
+  const defaultGenome = new Genome(200, 40, 100);
 
   const cell = new AliveCell(world, ++World.lastCellId, new Point(4, 5), defaultGenome);
 

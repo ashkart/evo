@@ -15,7 +15,7 @@ export class AliveCell extends AbstractCell {
   @observable genome: Genome;
 
   generation: number = 0;
-  mutationPeriod: number = 2;
+  mutationPeriod: number = 10;
 
   constructor(world: World, id: number, position: Point, genome: Genome, generation: number = 0) {
     super(id, 'alive', position);
