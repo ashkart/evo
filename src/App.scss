@@ -10,4 +10,17 @@
         display: inline-block;
         margin: 20px;
     }
+
+    .flex-row {
+        display: flex;
+        flex-flow: row;
+    }
+
+    .form-block {
+        margin: 20px;
+
+        >*:first-child {
+            margin-left: 0 10px;
+        }
+    }
 }
