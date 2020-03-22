@@ -24,7 +24,7 @@ export const Grid: FC<IProps> = observer(
       for (let y = 0; y < ySize; y++) {
         rows[y] = [];
 
-        for (let x = 0; x < ySize; x++) {
+        for (let x = 0; x < xSize; x++) {
           const cellData = cellsData.find(
             c => c.position.x === x && c.position.y === y,
           );
