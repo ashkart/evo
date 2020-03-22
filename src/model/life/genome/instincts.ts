@@ -83,7 +83,7 @@ export const InstinctRegistry: Record<string, Instinct> = {
   split: (cell: AliveCell, world: World): boolean => {
     const halfEnergy = Math.floor(cell.energy / 2);
 
-    if (cell.energy <= cell.genome.startEnergy * 2) {
+    if (cell.energy <= cell.genome.startEnergy) {
       return false;
     }
 

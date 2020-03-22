@@ -15,12 +15,16 @@ export class World {
 
   @observable food: Food[] = [];
 
-  maxFoodSpawn: number = 5;
+  maxFoodSpawn: number = 3;
+  foodSpawnPeriod: number = 5;
+  stepNumber: number = 0;
 
   xSize: number = 10;
   ySize: number = 10;
 
   @action tick = () => {
+    this.stepNumber++;
+
     this.cells.forEach((cell, i) => {
       if (!cell.isAlive) {
         this.removeCell(i);
@@ -30,7 +34,9 @@ export class World {
       cell.act();
     });
 
-    this.spawnFood();
+    if (this.stepNumber % this.foodSpawnPeriod === 0) {
+      this.spawnFood();
+    }
   }
 
   spawnFood() {
