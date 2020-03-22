@@ -1,14 +1,16 @@
 import React, { FC, ReactNode } from "react";
 import { Cell } from "./cell";
 
-import { AliveCell as CellData } from "../model/life/cells/aliveCell";
+import { AliveCell } from "../model/life/cells/aliveCell";
 import { GreenCell } from "../cell/greenCell";
 import { observer } from "mobx-react";
 
 import "./grid.scss";
+import { CellType, AbstractCell } from "../model/life/cells/cell";
+import { GreenPoint } from "../cell/greenPoint";
 
 interface IProps {
-  cellsData: CellData[];
+  cellsData: AbstractCell[];
   cellSize: number;
   xSize: number;
   ySize: number;
@@ -19,8 +21,6 @@ export const Grid: FC<IProps> = observer(
     const renderCells = () => {
       const rows: ReactNode[][] = [];
 
-      let y = 0;
-
       for (let y = 0; y < ySize; y++) {
         rows[y] = [];
 
@@ -29,9 +29,15 @@ export const Grid: FC<IProps> = observer(
             c => c.position.x === x && c.position.y === y,
           );
 
+          let ContentComponent;
+
+          if (cellData) {
+            ContentComponent = contentByType(cellData.type);
+          }
+
           rows[y].push(
             <Cell size={cellSize} key={`${x}_${y}`} x={x} y={y}>
-              {cellData && <GreenCell>{cellData.id}</GreenCell>}
+              {cellData && ContentComponent !== undefined && <ContentComponent />}
             </Cell>,
           );
         }
@@ -47,3 +53,12 @@ export const Grid: FC<IProps> = observer(
     );
   },
 );
+
+const contentByType = (type: CellType) => {
+  switch (type) {
+    case 'alive':
+      return GreenCell;
+    case 'food': 
+      return GreenPoint;
+  }
+};

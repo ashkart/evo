@@ -19,7 +19,7 @@ export const getRandomMoveInstinct = () : Instinct => {
   return InstinctRegistry[directionsMovingMap[index]];
 };
 
-const getRandomInt = (max: number, min: number = 0) : number => {
+export const getRandomInt = (max: number, min: number = 0) : number => {
   min = Math.ceil(min);
   max = Math.floor(max);
 
@@ -77,7 +77,7 @@ export const getRandomFreePointAround = (pos: Point, world: World) : Point => {
     const index = getRandomInt(pointsAround.length - 1);
     freePoint = pointsAround[index];
     
-    if (world.isEmptyPoint(freePoint)) {
+    if (world.hasNoObstacle(freePoint)) {
       return freePoint;
     }
 
@@ -87,7 +87,7 @@ export const getRandomFreePointAround = (pos: Point, world: World) : Point => {
   return pos;
 };
 
-const getPointsAround = () : (pos: Point) => Point[] => {
+export const getPointsAround = () : (pos: Point) => Point[] => {
   const possiblePoints: Record<string, Point[]> = {};
 
   return (position: Point) => {

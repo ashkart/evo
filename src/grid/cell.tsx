@@ -2,6 +2,7 @@ import React, { FC, ReactNode } from "react";
 
 import "./cell.scss";
 import { observer } from "mobx-react";
+import { CellType } from "../model/life/cells/cell";
 
 interface IProps {
     size: number;

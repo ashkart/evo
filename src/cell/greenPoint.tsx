@@ -8,6 +8,6 @@ interface IProps {
   children?: ReactNode;
 }
 
-export const GreenCell: FC<IProps> = observer(props => {
-  return <Cell color="green">{props.children && props.children}</Cell>;
+export const GreenPoint: FC<IProps> = observer(props => {
+  return <Cell color="green point">{props.children && props.children}</Cell>;
 });

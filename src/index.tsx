@@ -15,7 +15,7 @@ import { getRandomMoveInstinct } from './model/helpers';
 const world = new World();
 
 const defaultGenome = new Genome(10000, 300, 5000);
-const cell = new AliveCell(world, World.lastCellId++, new Point(4, 5), defaultGenome);
+const cell = new AliveCell(world, ++World.lastCellId, new Point(4, 5), defaultGenome);
 cell.energy = 1500;
 
 defaultGenome.instincts.push(InstinctRegistry.split);

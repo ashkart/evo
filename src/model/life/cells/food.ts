@@ -1,11 +1,10 @@
 import { Point } from "../../point";
+import { AbstractCell } from "./cell";
 
-export class Food {
+export class Food extends AbstractCell {
   energy: number = 10;
 
-  position: Point;
-
-  constructor(position: Point) {
-    this.position = position;
+  constructor(id: number, position: Point) {
+    super(id, 'food', position);
   }
 }

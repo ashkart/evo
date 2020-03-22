@@ -2,23 +2,21 @@ import { Genome } from "../genome";
 import { observable } from "mobx";
 import { Point } from "../../point";
 import { World } from "../../world";
+import { AbstractCell } from "./cell";
+import { Food } from "./food";
 
-export class AliveCell {
-  id: number;
-
-  isAlive: boolean = true;
+export class AliveCell extends AbstractCell {
+  @observable isAlive: boolean = true;
 
   world: World;
 
-  @observable position: Point;
   @observable energy: number;
   @observable genome: Genome;
 
-  constructor(world: World,id: number, position: Point, genome: Genome) {
+  constructor(world: World, id: number, position: Point, genome: Genome) {
+    super(id, 'alive', position);
     this.world = world;
 
-    this.id = id;
-    this.position = position;
     this.genome = genome;
 
     this.energy = genome.startEnergy;
@@ -40,6 +38,12 @@ export class AliveCell {
     if (this.energy <= 0) {
       this.die();
     }
+  }
+
+  consumeFood(food: Food) {
+    this.energy += food.energy;
+
+    this.world.removeFood(food);
   }
 
   die() {

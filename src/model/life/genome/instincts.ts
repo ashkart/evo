@@ -1,6 +1,7 @@
 import { AliveCell } from "../cells/aliveCell";
 import { World } from "../../world";
 import { Point } from "../../point";
+import { getPointsAround } from "../../helpers";
 
 export type Instinct = (cell: AliveCell, world: World) => boolean;
 
@@ -61,6 +62,24 @@ export const InstinctRegistry: Record<string, Instinct> = {
     return true;
   },
 
+  actForInterest: (cell: AliveCell, world: World): boolean => {
+    const pointsAround = getPointsAround()(cell.position);
+
+    for (const point of pointsAround) {
+      const food = world.food.find(f => f.position.equals(point));
+
+      if (food) {
+        const consumedResult = cell.genome.reactions.onFoodFound(cell, food);
+
+        if (typeof consumedResult === 'boolean') {
+          return consumedResult;
+        }
+      }
+    }
+
+    return false;
+  },
+
   split: (cell: AliveCell, world: World): boolean => {
     const halfEnergy = Math.floor(cell.energy / 2);
 
@@ -72,7 +91,7 @@ export const InstinctRegistry: Record<string, Instinct> = {
 
     const genome = cell.genome;
 
-    const child = new AliveCell(world, World.lastCellId++, cell.position, genome);
+    const child = new AliveCell(world, ++World.lastCellId, cell.position, genome);
     child.energy = halfEnergy;
 
     world.cells.push(child);

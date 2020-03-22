@@ -1,6 +1,8 @@
 import { AliveCell } from "./life/cells/aliveCell";
 import { observable, action } from "mobx";
 import { Point } from "./point";
+import { Food } from "./life/cells/food";
+import { getRandomInt } from "./helpers";
 
 export class World {
   static lastCellId: number = 0;
@@ -10,6 +12,10 @@ export class World {
   loopCache: Record<string, Point> = {};
 
   @observable cells: AliveCell[] = [];
+
+  @observable food: Food[] = [];
+
+  maxFoodSpawn: number = 5;
 
   xSize: number = 10;
   ySize: number = 10;
@@ -23,16 +29,35 @@ export class World {
 
       cell.act();
     });
+
+    this.spawnFood();
+  }
+
+  spawnFood() {
+    let spawnFoodCounter = this.maxFoodSpawn;
+
+    while (spawnFoodCounter--) {
+      const foodPoint = new Point(getRandomInt(this.xSize - 1), getRandomInt(this.ySize - 1));
+
+      if (this.isEmptyPoint(foodPoint)) {
+        this.food.push(new Food(++World.lastCellId, foodPoint));
+      }
+    }
   }
 
   removeCell(index: number) {
     this.cells.splice(index, 1);
   }
 
-  moveCell(cell: AliveCell, newPos: Point) : boolean {
+  removeFood(food: Food) {
+    const idx = this.food.findIndex(f => food.position.equals(f.position));
+    this.food.splice(idx, 1);
+  }
+
+  moveCell(cell: AliveCell, newPos: Point): boolean {
     newPos = this.worldLoopPosition(newPos);
 
-    if (this.isEmptyPoint(newPos) || cell.position.equals(newPos)) {
+    if (this.hasNoObstacle(newPos) || cell.position.equals(newPos)) {
       cell.position = newPos;
       return true;
     }
@@ -41,7 +66,7 @@ export class World {
   }
 
   // замкнутый мир
-  worldLoopPosition(position: Point) : Point {
+  worldLoopPosition(position: Point): Point {
     const key = `${position.x}_${position.y}`;
 
     if (this.loopCache[key] === undefined) {
@@ -54,8 +79,12 @@ export class World {
     return this.loopCache[key];
   }
 
-  isEmptyPoint(point: Point) : boolean {
+  hasNoObstacle(point: Point): boolean {
     return this.cells.find(c => c.position.x === point.x && c.position.y === point.y) === undefined;
+  }
+
+  isEmptyPoint(point: Point): boolean {
+    return this.hasNoObstacle && this.food.find(c => c.position.x === point.x && c.position.y === point.y) === undefined;
   }
 
   start() {

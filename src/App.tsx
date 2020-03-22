@@ -20,7 +20,7 @@ const App = observer((props: IProps) => {
   return (
     <div className="app">
       <Grid
-        cellsData={world.cells}
+        cellsData={[...world.cells, ...world.food]}
         cellSize={20}
         xSize={world.xSize}
         ySize={world.ySize}

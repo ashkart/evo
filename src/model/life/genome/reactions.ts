@@ -1,7 +1,7 @@
 import { AliveCell } from "../cells/aliveCell";
 import { World } from "../../world";
 import { getRandomFreePointAround } from "../../helpers";
-import { Point } from "../../point";
+import { Food } from "../cells/food";
 
 export const ReactionsRegistry = {
   obstacleMoveRandom: (cell: AliveCell, world: World) : boolean => {
@@ -10,5 +10,10 @@ export const ReactionsRegistry = {
     return true;
   },
 
-  foodConsume: (cell: AliveCell, foodPos: Point) => {} 
+  foodConsume: (cell: AliveCell, food: Food) : boolean => {
+    cell.consumeFood(food);
+    cell.position = food.position;
+
+    return true;
+  } 
 }
