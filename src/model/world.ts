@@ -1,4 +1,4 @@
-import { Cell } from "./cell";
+import { AliveCell } from "./life/cells/aliveCell";
 import { observable, action } from "mobx";
 import { Point } from "./point";
 
@@ -9,7 +9,7 @@ export class World {
 
   loopCache: Record<string, Point> = {};
 
-  @observable cells: Cell[] = [];
+  @observable cells: AliveCell[] = [];
 
   xSize: number = 10;
   ySize: number = 10;
@@ -21,7 +21,7 @@ export class World {
         return;
       }
 
-      cell.act(this);
+      cell.act();
     });
   }
 
@@ -29,7 +29,7 @@ export class World {
     this.cells.splice(index, 1);
   }
 
-  moveCell(cell: Cell, newPos: Point) : boolean {
+  moveCell(cell: AliveCell, newPos: Point) : boolean {
     newPos = this.worldLoopPosition(newPos);
 
     if (this.isEmptyPoint(newPos) || cell.position.equals(newPos)) {

@@ -1,6 +1,6 @@
 import { Point } from "./point";
 import { World } from "./world";
-import { InstinctRegistry, Instinct } from "./genome/instincts";
+import { InstinctRegistry, Instinct } from "./life/genome/instincts";
 
 const directionsMovingMap = [
   'leftOne',

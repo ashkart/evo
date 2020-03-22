@@ -1,18 +1,22 @@
-import { Genome } from "./genome";
-import { observable, action } from "mobx";
-import { Point } from "./point";
-import { World } from "./world";
+import { Genome } from "../genome";
+import { observable } from "mobx";
+import { Point } from "../../point";
+import { World } from "../../world";
 
-export class Cell {
+export class AliveCell {
   id: number;
 
   isAlive: boolean = true;
+
+  world: World;
 
   @observable position: Point;
   @observable energy: number;
   @observable genome: Genome;
 
-  constructor(id: number, position: Point, genome: Genome) {
+  constructor(world: World,id: number, position: Point, genome: Genome) {
+    this.world = world;
+
     this.id = id;
     this.position = position;
     this.genome = genome;
@@ -20,9 +24,9 @@ export class Cell {
     this.energy = genome.startEnergy;
   }
 
-  act(world: World): void {
+  act(): void {
     for (const instinctName in this.genome.instincts) {
-      const iResult = this.genome.instincts[instinctName](this, world);
+      const iResult = this.genome.instincts[instinctName](this, this.world);
 
       if (iResult === true) {
         break;

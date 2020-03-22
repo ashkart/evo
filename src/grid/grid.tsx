@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from "react";
 import { Cell } from "./cell";
 
-import { Cell as CellData } from "../model/cell";
+import { AliveCell as CellData } from "../model/life/cells/aliveCell";
 import { GreenCell } from "../cell/greenCell";
 import { observer } from "mobx-react";
 

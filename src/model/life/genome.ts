@@ -1,5 +1,6 @@
 import { observable } from "mobx";
 import { DefaultReactions } from "./genome/defaultReactions";
+import { Instinct } from "./genome/instincts";
 
 export class Genome {
     // abilities
@@ -7,7 +8,7 @@ export class Genome {
     startEnergy: number;
     maxEnergy: number;
 
-    @observable instincts: Function[];
+    @observable instincts: Instinct[];
 
     @observable reactions: DefaultReactions;
 
