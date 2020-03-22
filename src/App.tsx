@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Grid } from "./grid/grid";
 import { observer } from "mobx-react";
 
@@ -11,7 +11,9 @@ interface IProps {
 }
 
 const App = observer((props: IProps) => {
-  const {world} = props;
+  const { world } = props;
+
+  const [speed, setSpeed] = useState<number>(world.simSpeed);
 
   useEffect(() => {
     world.start();
@@ -25,6 +27,15 @@ const App = observer((props: IProps) => {
         xSize={world.xSize}
         ySize={world.ySize}
       />
+
+      <div className="controls">
+        <input 
+          type="number" 
+          value={speed} 
+          onChange={e => setSpeed(Number(e.target.value))} 
+        />
+        <button type="button" onClick={() => {world.simSpeed = speed}}>Setup</button>
+      </div>
     </div>
   );
 });

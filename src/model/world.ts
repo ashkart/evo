@@ -7,6 +7,8 @@ import { getRandomInt } from "./helpers";
 export class World {
   static lastCellId: number = 0;
 
+  @observable simSpeed: number = 1;
+
   isStarted: boolean = false;
 
   loopCache: Record<string, Point> = {};
@@ -99,7 +101,7 @@ export class World {
     const fn = () => {
       if (this.isStarted) {
         this.tick();
-        setTimeout(fn, 1000);
+        setTimeout(fn, 1000 / this.simSpeed);
       }
     };
 
