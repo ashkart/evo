@@ -64,8 +64,11 @@ export default App;
 
 const newWorld = () : World => {
   const world = new World();
+  world.xSize = 80;
+  world.ySize = 40;
 
-  const defaultGenome = new Genome(10000, 30, 40);
+  const defaultGenome = new Genome(10000, 80);
+
   const cell = new AliveCell(world, ++World.lastCellId, new Point(4, 5), defaultGenome);
 
   defaultGenome.instincts.push(InstinctRegistry.split);

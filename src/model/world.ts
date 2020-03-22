@@ -17,7 +17,7 @@ export class World {
 
   @observable food: Food[] = [];
 
-  maxFoodSpawn: number = 3;
+  maxFoodSpawn: number = 5;
   foodSpawnPeriod: number = 5;
   stepNumber: number = 0;
 

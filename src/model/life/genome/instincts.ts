@@ -2,6 +2,7 @@ import { AliveCell } from "../cells/aliveCell";
 import { World } from "../../world";
 import { Point } from "../../point";
 import { getPointsAround } from "../../helpers";
+import { Genome } from "../genome";
 
 export type Instinct = (cell: AliveCell, world: World) => boolean;
 
@@ -81,18 +82,15 @@ export const InstinctRegistry: Record<string, Instinct> = {
   },
 
   split: (cell: AliveCell, world: World): boolean => {
-    const halfEnergy = Math.floor(cell.energy / 2);
-
-    if (cell.energy <= cell.genome.startEnergy) {
+    if (cell.energy <= cell.genome.startEnergy * 1.5) {
       return false;
     }
 
-    cell.spendEnergy(halfEnergy);
+    cell.spendEnergy(cell.genome.startEnergy);
 
-    const genome = cell.genome;
-
-    const child = new AliveCell(world, ++World.lastCellId, cell.position, genome);
-    child.energy = halfEnergy;
+    const genome = cell.genome.clone();
+    const child = new AliveCell(world, ++World.lastCellId, cell.position, genome, cell.generation + 1);
+    child.energy = cell.genome.startEnergy;
 
     world.cells.push(child);
 

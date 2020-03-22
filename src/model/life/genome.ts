@@ -15,8 +15,8 @@ export class Genome {
     constructor(
         maxAge = 100,
         startEnergy = 100,
-        maxEnergy = 200,
-        instincts = [],
+        maxEnergy = startEnergy * 2,
+        instincts: Instinct[] = [],
         reactions = new DefaultReactions()
     ) {
         this.maxAge = maxAge;
@@ -24,5 +24,18 @@ export class Genome {
         this.maxEnergy = maxEnergy;
         this.instincts = instincts;
         this.reactions = reactions;
+    }
+
+    clone() {
+        const instincts: Instinct[] = [];
+
+        for (const ins of this.instincts) {
+            instincts.push(ins);
+        }
+
+        const reacts = new DefaultReactions();
+        const nextGenome = new Genome(this.maxAge, this.startEnergy, this.maxEnergy, instincts, reacts);
+
+        return nextGenome;
     }
 }
